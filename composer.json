@@ -1,0 +1,20 @@
+{
+  "name": "piron/eth-parser",
+  "description": "etherscan parser",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "bolpol",
+      "email": "paul.bolhar@gmail.com"
+    }
+  ],
+  "require": {
+    "dzarezenko/etherscan-api": "dev-master",
+    "illuminate/database": "5.5.x-dev",
+    "illuminate/events": "5.5.x-dev",
+    "guzzlehttp/guzzle": "6.3.0",
+    "digitaldonkey/ethereum-php": "dev-master",
+    "sc0vu/web3.php": "0.1.3"
+  }
+}

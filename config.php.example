@@ -1,0 +1,24 @@
+<?php
+/**
+ * @important !!!You must set up valid data for every constant
+ */
+
+/**
+ * DB connection
+ */
+defined("DBDRIVER")or define("DBDRIVER","mysql");
+defined("DBHOST")or define("DBHOST","localhost");
+defined("DBNAME")or define("DBNAME","dbname");
+defined("DBUSER")or define("DBUSER","dbuser");
+defined("DBPASS")or define("DBPASS","dbpass");
+
+/**
+ * Global constants
+ */
+defined("CONTRACT")or define("CONTRACT","address");
+defined("ETHSCNAPI")or define("ETHSCNAPI","key");
+defined("INFURAAPI")or define("INFURAAPI","key");
+defined("THASH")or define("THASH","0xa9059cbb"); // do not change
+defined("TSYMBOL")or define("TSYMBOL","");
+defined("TNAME")or define("TNAME","");
+
