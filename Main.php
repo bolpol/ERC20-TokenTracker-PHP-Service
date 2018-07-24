@@ -122,7 +122,7 @@ class Main
         $trx->save();
     }
 
-    public function getFistsBlock()
+    public function getFistsBlock(tx="")
     {
         $firstTx = 0;
 
@@ -130,7 +130,8 @@ class Main
             $firstTx = TransactionsModel::all()->last()->block_number;
 
         } else {
-            $firstTx = $this->getFirstTransactionBlockNumber("0xa9bc0b4fbd927358746b328dc4ad1438b1a361fc6382b69136a6e242c2ae8a3d")->val();
+            if(tx === "") exit("! pls insert tx hash here");
+            $firstTx = $this->getFirstTransactionBlockNumber(tx)->val();
         }
 
         return $firstTx;
