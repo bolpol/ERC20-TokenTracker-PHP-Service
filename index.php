@@ -23,7 +23,7 @@
              constructor() {}
             
              post(input, id) {
-                $.post("http://negoro/Main.php", {
+                $.post("Main.php", {
                     type: "text",
                     data: input,
                     timeout: 0 // ms
@@ -62,7 +62,7 @@
                 else {
 
                     console.log("Not equal :" + Number(Number(newstep) + Number(1)))
-                    if (Number(Number(newstep) + Number(1)) >= 27000) throw new Error("more");
+                    if (Number(Number(newstep) + Number(1)) >= 700) throw new Error("more");
                     let ltd = app.getHash(Number(Number(newstep) + Number(1)));
                     $("#counter").html(Number(Number(newstep) + Number(1)))
                     let checkBNV2 = setInterval(function () {

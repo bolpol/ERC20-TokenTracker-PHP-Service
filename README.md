@@ -5,9 +5,17 @@ token tracker, ethereum token tracker php service, search erc20 transaction
 
 Before using, configure *config.php* file from *config.php.example* (required api infura.io, ethrescan.io)
 
+```$xslt
+npm install
+cp config.php.example config.php
+```
+
 Update project via composer and nodejs.
 
-Set up php and run php server, open CMD and type *php -S http://localhost:5000*
+Set up php and run php server, open CMD and type 
+```
+php -S localhost:3000
+```
 
 # Structure
 

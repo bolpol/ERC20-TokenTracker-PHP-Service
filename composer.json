@@ -10,6 +10,9 @@
     }
   ],
   "require": {
+    "ext-bcmath": "*",
+    "ext-curl": "*",
+    "ext-json": "*",
     "dzarezenko/etherscan-api": "dev-master",
     "illuminate/database": "5.5.x-dev",
     "illuminate/events": "5.5.x-dev",

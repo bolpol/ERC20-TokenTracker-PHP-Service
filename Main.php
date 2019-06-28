@@ -49,7 +49,7 @@ class Main
         $this->eth_proxy = new EtherscanProxy($this->auth_token);
 
         try {
-            $this->infura_api = new Ethereum('https://mainnet.infura.io/' . INFURAAPI);
+            $this->infura_api = new Ethereum('https://mainnet.infura.io/v3/' . INFURAAPI);
         }
         catch (\Exception $exception) {
             die ("Unable to connect.");
@@ -122,7 +122,7 @@ class Main
         $trx->save();
     }
 
-    public function getFistsBlock(tx="")
+    public function getFistsBlock($tx="")
     {
         $firstTx = 0;
 
@@ -130,8 +130,8 @@ class Main
             $firstTx = TransactionsModel::all()->last()->block_number;
 
         } else {
-            if(tx === "") exit("! pls insert tx hash here");
-            $firstTx = $this->getFirstTransactionBlockNumber(tx)->val();
+            if($tx === "") exit("! pls insert tx hash here");
+            $firstTx = $this->getFirstTransactionBlockNumber($tx)->val();
         }
 
         return $firstTx;
@@ -262,7 +262,7 @@ class Main
             exit;
         }
 
-        if($tx->timestamp >= 1525132800) {
+        if($tx->timestamp >= 1560854886) {
             echo "Processing completed: By time";
             exit;
         }
@@ -273,6 +273,8 @@ class Main
                                     //"70a08231": "balanceOf(address)",
                                     //"313ce567": "decimals()",
         $destroy = "a24835d1";      //"destroy(address,uint256)",
+        $burn = "42966c68";
+        $burnFrom = "79cc6790";
                                     //"1608f18f": "disableTransfers(bool)",
         $issue = "867904b4";        //"issue(address,uint256)",
                                     //"06fdde03": "name()",
@@ -294,22 +296,44 @@ class Main
             $balance_sender = (string) ($db::where('address', $sender)->first())->amount;
             $balance_spender = (string) ($db::where('address', $spender)->first())->amount;
 
+
+            // only for tokens without issue or constructor is without emit Transfer()
+  /*          if ($tx->to === '' && strlen($tx->contractAddress) > 0)
+            {
+                $spender = $tx->from;
+                $balance_spender = (string) 10000000000000000000000000;
+                $this->writeToBalances($model, $spender, $balance_spender);
+                return;
+            }*/
+
             if($balance_sender === null) $balance_sender = 0;
             if($balance_spender === null) $balance_spender = 0;
 
             $amount = $getInput[2];
 
-            if($transfer === $getInput[0]) {
+            if($sender == '0x63Af16790B8df46F160D119711bFBB11763eE9F7' ||
+                $spender == '0x63Af16790B8df46F160D119711bFBB11763eE9F7')
+            {
+                $amount = 0;
+            }
+
+            if($sender == '0x11d6628e83a8d70620147654688e97c70cd2745e' ||
+                $spender == '0x11d6628e83a8d70620147654688e97c70cd2745e')
+            {
+                $amount = 0;
+            }
+
+            if ($transfer === $getInput[0]) {
 
                 $balance_sender = bcsub((string) $balance_sender, (string) $amount);
                 $this->writeToBalances($model, $sender, $balance_sender);
 
                 $balance_spender = bcadd((string) $balance_spender, (string) $amount);
                 $this->writeToBalances($model, $spender, $balance_spender);
-
+                return;
             }
 
-            if($transferFrom === $getInput[0]) {
+            if ($transferFrom === $getInput[0]) {
 
                 $input = $tx->input;
                 $x0 = 2;
@@ -338,17 +362,22 @@ class Main
 
                 $balance_spender = bcadd((string) $balance_spender, (string) $amount);
                 $this->writeToBalances($model, $spender, $balance_spender);
-
+                return;
             }
 
-            if($destroy === $getInput[0]) {
+            if ($destroy === $getInput[0] ||
+                $burn === $getInput[0] ||
+                $burnFrom === $getInput[0])
+            {
                 $balance_spender = bcsub((string) $balance_spender, (string) $amount);
                 $this->writeToBalances($model, $spender, $balance_spender);
+                return;
             }
 
-            if($issue === $getInput[0]) {
+            if ($issue === $getInput[0]) {
                 $balance_spender = bcadd((string) $balance_spender, (string) $amount);
                 $this->writeToBalances($model, $spender, $balance_spender);
+                return;
             }
         }
     }
@@ -372,7 +401,7 @@ if($_POST["data"]["count"]) {
     if(is_null($txi) || $txi === 0) {
         echo "Null or zero incoming";
     } else {
-        $tx = NormalTransactionsModel::where("id", $txi)->get();
+        $tx = TransactionsModel::where("id", $txi)->get();
         $rtx = \json_decode($tx[0]["transaction_hash"]);
         $model = "BalancesIntBalModel";
         echo $app->countBalances($model, $rtx);
@@ -436,3 +465,62 @@ if($_POST["data"]["finderc20trxs"] === "1") {
     }
 }
 
+//var_dump(TransactionsModel::all()->count());
+
+// Fill the transactions list
+// If crush, clear your database and start please again with increased time beatween operations
+if($_GET["findnormaltrxs"]==='start') {
+
+    $txs = $app->eth_proxy->getNormalTxs(CONTRACT);
+
+    if($txs->status === "1") {
+
+        $len = count($txs->result);
+
+        for($i = 0; $i<$len; $i++) {
+
+            if ($txs->result[$i]->isError === '0') {
+
+                $app->writeToTransactions(json_encode($txs->result[$i]));
+            }
+            time_nanosleep(1, 300000000);
+        }
+    }
+
+    echo "Complete! " . TransactionsModel::all()->count() . " records added!";
+    exit;
+}
+
+if($_GET["list"]==='get' && !is_null($_GET["p"])) {
+
+    $id= $_GET["p"] * 50;
+    var_dump($id);
+    if($_GET["p"] === '0') $id = 0;
+    $id += 1;
+    ($inst = BalancesIntBalModel::where('id', '>', $id)->take(50)->get(['address', 'amount']));
+    var_dump($len = count($inst));
+    //var_dump($inst[0]->address);
+    //var_dump($inst[0]->amount);
+
+    $address = "[";
+    $amount = '[';
+
+    for($i=0; $i<$len; $i++) {
+        if($i === $len-1) {
+            $address    .= '"' . $inst[$i]->address . '"]' ;
+            $amount     .= '"' . $inst[$i]->amount  . '"]';
+            echo "<pre>";
+            echo $address;
+            echo "<br/>";
+            echo "<br/>";
+            echo $amount;
+            exit;
+        }
+        $address    .= '"' . $inst[$i]->address . '",' ;
+        $amount     .= '"' . $inst[$i]->amount  . '",';
+    }
+}
+
+
+
+//$app->eth_proxy->getNormalTxs(CONTRACT);

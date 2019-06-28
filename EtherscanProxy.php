@@ -135,11 +135,25 @@ class EtherscanProxy {
         );
     }
 
+//http://api.etherscan.io/api?module=account&action=txlist&address=0x24eeb54a34d24d4a4baa1b1379928f7978951aca&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken
+
+
+    public function getNormalTxs($address, $startblock=0, $endblock=9999999, $sort="asc")
+    {
+        return \json_decode(
+            $this->get(
+                'https://api.etherscan.io/api?module=account&action=txlist&address=' . $address .
+                '&startblock=' . $startblock .
+                '&endblock=' . $endblock .
+                '&sort=' . $sort .
+                '&apikey=' . $this->auth_token
+            )
+        );
+    }
+
+
     public function get_list_of_normal_txs($address, $page=1, $startblock=0, $endblock=9999999, $offset=10, $sort="asc")
     {
-        //https://api.etherscan.io/api?module=account&action=txlist&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a
-        //&startblock=0
-        //&endblock=99999999&page=1&offset=10&sort=asc&apikey=YourApiKeyToken
         return \json_decode(
             $this->get(
                 'https://api.etherscan.io/api?module=account&action=txlist&address=' . $address .
@@ -153,14 +167,25 @@ class EtherscanProxy {
         );
     }
 
-    public function get_list_of_last10k_erc20_txs($address, $sort="asc")
+    public function get_list_of_last10k_erc20_txs(string $address, $sort="asc")
     {
-        //https://api.etherscan.io/api?module=account&action=txlist&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a
-        //&startblock=0
-        //&endblock=99999999&page=1&offset=10&sort=asc&apikey=YourApiKeyToken
         return \json_decode(
             $this->get(
-                'http://api.etherscan.io/api?module=account&action=tokentx&address=' . $address .
+                'http://api.etherscan.io/api?module=account&action=tokentx&address=' .
+                $address .
+                '&startblock=0&endblock=999999999' .
+                '&sort=' . $sort .
+                '&apikey=' . $this->auth_token
+            )
+        );
+    }
+
+    public function getTransferEvents(string $address, $sort="asc")
+    {
+        return \json_decode(
+            $this->get(
+                'http://api.etherscan.io/api?module=account&action=tokentx&address=' .
+                $address .
                 '&startblock=0&endblock=999999999' .
                 '&sort=' . $sort .
                 '&apikey=' . $this->auth_token

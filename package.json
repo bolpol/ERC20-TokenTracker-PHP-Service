@@ -1,0 +1,30 @@
+{
+  "name": "erc20-tokentracker-php-service",
+  "version": "0.0.9",
+  "description": "parse your erc20 tokens",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gfijrb/ERC20-TokenTracker-PHP-Service.git"
+  },
+  "keywords": [
+    "erc20",
+    "token",
+    "parser",
+    "ethereum",
+    "token",
+    "parser"
+  ],
+  "author": "t.me/bolpol",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gfijrb/ERC20-TokenTracker-PHP-Service/issues"
+  },
+  "homepage": "https://github.com/gfijrb/ERC20-TokenTracker-PHP-Service#readme",
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
+}
