@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa3e3df5e96af3bd723dd0688608e034",
+    "content-hash": "51eb8a9fa2b8767981e2edd420ff4f69",
     "packages": [
         {
             "name": "digitaldonkey/ecverify",
@@ -63,10 +63,11 @@
             },
             "require": {
                 "digitaldonkey/ecverify": "1.0",
+                "ext-json": "*",
                 "graze/guzzle-jsonrpc": "~3.0",
                 "kornrunner/keccak": "^1.0",
                 "pear/math_biginteger": "^1.0",
-                "php": ">=5.6"
+                "php": ">=7.1"
             },
             "require-dev": {
                 "gossi/php-code-generator": "^0.5.0",
@@ -535,12 +536,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "b13f6ca02af40dab96757f1ef79b6eaf53b446de"
+                "reference": "97b9f721416560144fb00f02e48d51a45efe2181"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/b13f6ca02af40dab96757f1ef79b6eaf53b446de",
-                "reference": "b13f6ca02af40dab96757f1ef79b6eaf53b446de",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/97b9f721416560144fb00f02e48d51a45efe2181",
+                "reference": "97b9f721416560144fb00f02e48d51a45efe2181",
                 "shasum": ""
             },
             "require": {
@@ -586,7 +587,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2018-04-29T13:01:12+00:00"
+            "time": "2019-06-17T09:27:32+00:00"
         },
         {
             "name": "illuminate/events",
@@ -594,12 +595,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
-                "reference": "1b558bfa1013f25b35e593c83fce7990d20c4d97"
+                "reference": "b386f27fc7b4c5d30cab4e9bbb5b2c971fd48ba7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/events/zipball/1b558bfa1013f25b35e593c83fce7990d20c4d97",
-                "reference": "1b558bfa1013f25b35e593c83fce7990d20c4d97",
+                "url": "https://api.github.com/repos/illuminate/events/zipball/b386f27fc7b4c5d30cab4e9bbb5b2c971fd48ba7",
+                "reference": "b386f27fc7b4c5d30cab4e9bbb5b2c971fd48ba7",
                 "shasum": ""
             },
             "require": {
@@ -631,7 +632,7 @@
             ],
             "description": "The Illuminate Events package.",
             "homepage": "https://laravel.com",
-            "time": "2017-12-14T13:29:55+00:00"
+            "time": "2019-02-11T13:51:03+00:00"
         },
         {
             "name": "illuminate/support",
@@ -1188,16 +1189,16 @@
         },
         {
             "name": "simplito/elliptic-php",
-            "version": "1.0.4",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplito/elliptic-php.git",
-                "reference": "be6b14c6999a5c328457d571f643ef8b3f3f82d0"
+                "reference": "15652609aa55968d56685c2a9120535ccdc00fd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplito/elliptic-php/zipball/be6b14c6999a5c328457d571f643ef8b3f3f82d0",
-                "reference": "be6b14c6999a5c328457d571f643ef8b3f3f82d0",
+                "url": "https://api.github.com/repos/simplito/elliptic-php/zipball/15652609aa55968d56685c2a9120535ccdc00fd9",
+                "reference": "15652609aa55968d56685c2a9120535ccdc00fd9",
                 "shasum": ""
             },
             "require": {
@@ -1244,7 +1245,7 @@
                 "nistp521",
                 "secp256k1"
             ],
-            "time": "2018-05-11T07:40:56+00:00"
+            "time": "2019-11-14T13:43:07+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1386,6 +1387,10 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-bcmath": "*",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
     "platform-dev": []
 }
