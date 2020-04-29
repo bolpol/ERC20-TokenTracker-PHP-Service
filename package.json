@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/gfijrb/ERC20-TokenTracker-PHP-Service#readme",
   "dependencies": {
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   }
 }
