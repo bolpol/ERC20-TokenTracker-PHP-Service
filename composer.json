@@ -16,7 +16,7 @@
     "dzarezenko/etherscan-api": "dev-master",
     "illuminate/database": "5.5.x-dev",
     "illuminate/events": "5.5.x-dev",
-    "guzzlehttp/guzzle": "6.3.0",
+    "guzzlehttp/guzzle": "6.5.7",
     "digitaldonkey/ethereum-php": "dev-master",
     "sc0vu/web3.php": "0.1.3"
   }
